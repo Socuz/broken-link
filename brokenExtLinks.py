@@ -1,35 +1,22 @@
 import subprocess
-import csv
 
 def check_broken_ext_links():
-    headerList = ["urlname", "parentname", "base", "result", "warningstring", "infostring", "valid", "url", "line", "column","name", "dltime", "size", "checktime", "cached", "level", "modified"]
+    subprocess.run(["linkchecker", "--check-extern", "-F", "text", "-q", "https://docs.csc.fi"])
 
-    subprocess.run(["linkchecker", "--check-extern", "-F", "csv", "-q", "https://docs.csc.fi"])
+    with open("linkchecker-out.txt", "r") as f_in:
+        file = f_in.read()
+        result = "Result     Error: 404 Not Found"
+        counter = 0
 
-    # Clean csv linkchecker output
-    with open("linkchecker-out.csv", "r") as csv_in, open("broken_links.csv", "w") as csv_out:
-        csv_writer = csv.writer(csv_out)
-        dw = csv.DictWriter(csv_out, delimiter=';', fieldnames=headerList)
-        dw.writeheader()
-
-        [csv_writer.writerow(row) for row in csv.reader(csv_in) if row[0].startswith("http")]
-
-    # Read the new output file and get 404 errors
-    with open("broken_links.csv", "r") as csv_in:
-        csv_reader = csv.reader(csv_in, delimiter=';')
-        line_count = 0
-
-        print("Broken links:")
-        for row in csv_reader:
-            try:
-                error = row[3].startswith("404")
-                if error:
-                    print(f"PARENT URL: {row[1]} has this broken link URL: {row[0]}")
-                    line_count += 1
-            except IndexError:
-                pass
-        
-        print(f"Processed: {line_count}")
+        print("BROKEN LINKS REPORT: \n")
+        for line in file.split('\n\n'):
+            if result in line:
+                url = line.split('\n')[0].split('        ')[-1]
+                name = line.split('\n')[1].split('       ')[-1]
+                parent_url = line.split('\n')[2].split(' ')[-5].strip(',')
+                counter += 1
+                print(f"URL: {url}\nName: {name}\nParent URL: {parent_url}\n{result}\n")
+        print(f"Processed: {counter}")
 
 if __name__ == "__main__":
     check_broken_ext_links()
