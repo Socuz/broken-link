@@ -1,3 +1,7 @@
+import subprocess
+
+subprocess.run(["linkchecker", "--check-extern", "-F", "text", "-q", "https://docs.csc.fi"])
+
 with open("linkchecker-out.txt", "r") as f_in:
     file = f_in.read()
     result = "Result     Error: 404 Not Found"
