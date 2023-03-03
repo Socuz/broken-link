@@ -16,7 +16,7 @@ pip3 install -r requirements.txt
 ## How to run
 While you are into your virtual environment, you can run this command to run the tool:
 ```py
-python3 brokenLinks.py
+python3 brokenExtLinks.py
 ````
 ## Explanations
 This script uses LinkChecker (https://github.com/linkchecker/linkchecker), get the results to a .csv file (linkchecker-out.csv).  
