@@ -1,7 +1,9 @@
 import subprocess
 
-def check_broken_ext_links():
-    subprocess.run(["linkchecker", "--check-extern", "-F", "text", "-q", "https://docs.csc.fi"])
+URL = input("Type the website to be tested (eg: https://www.google.com): ")
+
+def check_broken_ext_links(URL):
+    subprocess.run(["linkchecker", "--check-extern", "-F", "text", "-q", URL])
 
     with open("linkchecker-out.txt", "r") as f_in:
         file = f_in.read()
@@ -19,4 +21,4 @@ def check_broken_ext_links():
         print(f"Processed: {counter}")
 
 if __name__ == "__main__":
-    check_broken_ext_links()
+    check_broken_ext_links(URL)
