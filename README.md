@@ -10,7 +10,8 @@ While you are into your virtual environment, you can run this command to run the
 ```py
 ./broken_ext_links.py <opt_arg>
 ````
-By default, if no argument is specified (_opt_arg_), it will run the test on **https://docs.csc.fi/**. Otherwise, it will test the given website.
+By default, if no argument is specified (_opt_arg_), it will run the test on **https://docs.csc.fi/**. It will last around 10 minutes.  
+Otherwise, it will test the given website.
 ## Explanations
 This script uses LinkChecker (https://github.com/linkchecker/linkchecker).
 After LinkChecker is completed, it gets the results into a .txt file (linkchecker-out.txt). The next lines of the script will parse the text file and will look for lines that contain "Result     Error: 404 Not Found".  

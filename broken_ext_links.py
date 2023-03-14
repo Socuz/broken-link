@@ -2,8 +2,10 @@
 """
 Module for checking broken links (404)
 
-It will ask you for the URL to test if you don't add as an argument.
-eg: python3 brokenExtLinks https://www.google.com
+Use https://docs.csc.fi/ as default URL for checking.
+If you want to test another URL, you need to specify as argument
+
+eg: ./broken_ext_links.py https://www.google.com
 """
 
 import subprocess
@@ -11,7 +13,7 @@ import sys
 
 def check_broken_ext_links(url):
     """
-    Function for checking broken links (404) on a given website.
+    Function for checking broken links (404).
     """
     subprocess.run(["linkchecker", "--check-extern", "-F", "text", "-q", url], check=False)
 
@@ -33,7 +35,9 @@ def check_broken_ext_links(url):
 if __name__ == "__main__":
     if len(sys.argv) != 2:
         URL = "https://docs.csc.fi/"
+        print(f"No URL specified, testing: {URL}")
     else:
         URL = sys.argv[1]
+        print(f"Testing {URL}")
 
     check_broken_ext_links(URL)
