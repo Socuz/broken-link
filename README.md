@@ -1,4 +1,4 @@
-# Tool for checking extern broken links
+# Tool for checking external broken links
 ## Installation
 After cloning this repo, you need to install the requirements:
 ```py
