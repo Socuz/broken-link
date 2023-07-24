@@ -1,0 +1,51 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+labels:
+  app: broken-link
+message: Check broken link
+metadata:
+  annotations:
+    description: "Check links broken"
+  name: broken-link
+objects:
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    name: broken-link
+  spec:
+    source:
+      git:
+        ref: develop
+        uri: 'https://github.com/Socuz/etherpad-lite.git'
+      type: Git
+    strategy:
+      type: Source
+    output:
+      to:
+        kind: ImageStreamTag
+        name: broken-link:latest
+    triggers:
+      - type: ImageChange
+      - type: ConfigChange
+
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    annotations:
+      description: Keeps track of changes in the application image
+    name: broken-link
+
+- apiVersion: batch/v1beta1
+  kind: CronJob
+  metadata:
+    name: test
+  spec:
+    schedule: '*/1 * * * *'
+    jobTemplate:
+      spec:
+        template:
+          spec:
+            containers:
+              - name: linky
+                image: tests-tristan
+            restartPolicy: OnFailure
