@@ -14,12 +14,12 @@ objects:
     name: broken-link
   spec:
     source:
-      git:
-        ref: develop
-        uri: 'https://github.com/Socuz/etherpad-lite.git'
       type: Git
+      git:
+        uri: 'https://github.com/Socuz/broken-link.git'
+        ref: cronj
     strategy:
-      type: Source
+      type: Docker
     output:
       to:
         kind: ImageStreamTag
@@ -38,7 +38,7 @@ objects:
 - apiVersion: batch/v1beta1
   kind: CronJob
   metadata:
-    name: test
+    name: broken-link
   spec:
     schedule: '*/1 * * * *'
     jobTemplate:
@@ -47,5 +47,5 @@ objects:
           spec:
             containers:
               - name: linky
-                image: tests-tristan
+                image: broken-link:latest
             restartPolicy: OnFailure
