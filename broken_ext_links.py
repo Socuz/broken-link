@@ -19,7 +19,7 @@ def check_broken_ext_links(url):
     """
     Function for checking broken links (404).
     """
-    subprocess.run(["linkchecker", "--check-extern", "-F", "text", "-q", url], check=False)
+    subprocess.run(["linkchecker", "--check-extern", "--user-agent", "Mozilla/5.0 (compatible; LinkChecker/9.3; +http://wummel.github.io/linkchecker/)", "-F", "text", "-q", url], check=False)
 
     with open("linkchecker-out.txt", "r", encoding="utf-8") as f_in:
         file = f_in.read()
