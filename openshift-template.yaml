@@ -47,6 +47,6 @@ objects:
           spec:
             containers:
               - name: linky
-                image: docker-registry.default.svc:5000/tests-tristan/broken-link:latest
+                image: image-registry.openshift-image-registry.svc:5000/tests-tristan/broken-link:latest
             restartPolicy: OnFailure
             
