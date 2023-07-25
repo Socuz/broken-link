@@ -35,18 +35,18 @@ objects:
       description: Keeps track of changes in the application image
     name: broken-link
 
-- apiVersion: batch/v1beta1
+- apiVersion: batch/v1
   kind: CronJob
   metadata:
     name: broken-link
   spec:
-    schedule: '*/30 * * * *'
+    schedule: '*/15 * * * *'
     jobTemplate:
       spec:
         template:
           spec:
             containers:
               - name: linky
-                image: image-registry.openshift-image-registry.svc:5000/tests-tristan/broken-link:latest
+                image: image-registry.openshift-image-registry.svc:5000/tristan-tests/broken-link:latest
             restartPolicy: OnFailure
             
