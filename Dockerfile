@@ -8,6 +8,7 @@ RUN addgroup -S broken && adduser -S broken -G broken
 RUN mkdir -p /opt/broken-link/ && chown broken:broken /opt/broken-link/
 
 COPY --chown=broken:broken ./ ./opt/broken-link/
+RUN chmod -R g=u .
 WORKDIR /opt/broken-link/
 RUN pip3 install -r requirements.txt
 
