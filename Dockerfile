@@ -1,19 +1,15 @@
-FROM alpine:latest
+FROM python:3.12.0b4-alpine3.18
 
-RUN apk add --update --no-cache python3 py3-pip
-RUN pip3 install --upgrade pip
+RUN pip install --upgrade pip
 
-RUN addgroup -S broken && adduser -S broken -G broken
+RUN adduser -D worker
+USER worker
+RUN mkdir -p /home/worker/broken-link/
+WORKDIR /home/worker/broken-link
+COPY --chown=worker:worker requirements.txt requirements.txt
+COPY --chown=worker:worker broken_ext_links.py broken_ext_links.py
 
-RUN mkdir -p /opt/broken-link/ && chown broken:broken /opt/broken-link/
+RUN pip install --user -r requirements.txt
+ENV PATH="/home/worker/.local/bin:${PATH}"
 
-USER broken
-WORKDIR /opt/broken-link/
-COPY --chown=broken:broken ./ ./
-RUN chmod -R 775 .
-
-USER root
-RUN pip3 install -r requirements.txt
-
-USER broken
-CMD ["python3", "/opt/broken-link/broken_ext_links.py"]
+CMD ["python", "/home/worker/broken-link/broken_ext_links.py"]
