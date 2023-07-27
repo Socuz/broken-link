@@ -1,24 +1,24 @@
 apiVersion: template.openshift.io/v1
 kind: Template
 labels:
-  app: s2i-test
-message: s2i-test
+  app: broken-link
+message: "App for testing docs.csc.fi and report broken links"
 metadata:
   annotations:
     description: "Check links broken"
-  name: s2i-test
+  name: broken-link
 objects:
 - apiVersion: build.openshift.io/v1
   kind: BuildConfig
   metadata:
     labels:
-      app: s2i-test
-    name: s2i-test
+      app: broken-link
+    name: broken-link
   spec:
     output:
       to:
         kind: ImageStreamTag
-        name: s2i-test:latest
+        name: broken-link:latest
     source:
       git:
         ref: s2i
@@ -40,14 +40,14 @@ objects:
   kind: ImageStream
   metadata:
     labels:
-      app: s2i-test
-    name: s2i-test
+      app: broken-link
+    name: broken-link
   status: {}
 
 - apiVersion: batch/v1
   kind: CronJob
   metadata:
-    name: s2i-test
+    name: broken-link
   spec:
     schedule: '0 3 2 * *'
     jobTemplate:
@@ -55,6 +55,6 @@ objects:
         template:
           spec:
             containers:
-              - name: s2i-test
-                image: image-registry.apps.2.rahti.csc.fi/tristan-tests/s2i-test:latest
+              - name: broken-link
+                image: image-registry.apps.2.rahti.csc.fi/tristan-tests/broken-link:latest
             restartPolicy: OnFailure
