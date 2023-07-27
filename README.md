@@ -7,7 +7,7 @@ Simply process the file `template-s2i.yaml` to create:
 
 You will need three parameters:
 - NAMESPACE: Name of your Rahti project/namespace
-- GITHUB_REPO: URL of the GitHub repo where to source for building the image
+- GITHUB_URL: URL of the GitHub repo where to source for building the image
 - GITHUB_BRANCH: Name of the GitHub branch
 
 Example:
