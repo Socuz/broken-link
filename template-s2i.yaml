@@ -1,0 +1,60 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+labels:
+  app: s2i-test
+message: s2i-test
+metadata:
+  annotations:
+    description: "Check links broken"
+  name: s2i-test
+objects:
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    labels:
+      app: s2i-test
+    name: s2i-test
+  spec:
+    output:
+      to:
+        kind: ImageStreamTag
+        name: s2i-test:latest
+    source:
+      git:
+        ref: s2i
+        uri: https://github.com/Socuz/broken-link.git
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: python:3.9-ubi8
+          namespace: openshift
+      type: Source
+    triggers:
+      - type: ImageChange
+      - type: ConfigChange
+  status: {}
+
+- apiVersion: image.openshift.io/v1
+  kind: ImageStream
+  metadata:
+    labels:
+      app: s2i-test
+    name: s2i-test
+  status: {}
+
+- apiVersion: batch/v1
+  kind: CronJob
+  metadata:
+    name: s2i-test
+  spec:
+    schedule: '0 3 2 * *'
+    jobTemplate:
+      spec:
+        template:
+          spec:
+            containers:
+              - name: s2i-test
+                image: image-registry.apps.2.rahti.csc.fi/tristan-tests/s2i-test:latest
+            restartPolicy: OnFailure
