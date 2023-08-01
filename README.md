@@ -12,7 +12,7 @@ You will need three parameters:
 
 Example:
 ```shell
-oc process -f template-s2i.yaml -p NAMESPACE="my-project-test" -p GITHUB_URL="https://github.com/Socuz/broken-link.git" -p GITHUB_BRANCH="s2i"
+oc process -f template-s2i.yaml -p NAMESPACE="my-project-test" -p GITHUB_URL="https://github.com/Socuz/broken-link.git" -p GITHUB_BRANCH="s2i" | oc apply -f - 
 ```
 You can modify the schedule of the cronjob by modifying the line `schedule`:
 ```yaml
