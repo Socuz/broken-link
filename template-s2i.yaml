@@ -20,7 +20,7 @@ parameters:
 - name: GITHUB_BRANCH
   description: Branch used in the GitHub repo
   required: true
-  value: s2i
+  value: rahti3
 
 objects:
 - apiVersion: build.openshift.io/v1
@@ -43,7 +43,7 @@ objects:
       sourceStrategy:
         from:
           kind: ImageStreamTag
-          name: python:3.9-ubi8
+          name: python:3.9
           namespace: openshift
       type: Source
     triggers:
@@ -59,7 +59,7 @@ objects:
     name: broken-link
   status: {}
 
-- apiVersion: batch/v1
+- apiVersion: batch/v1beta1
   kind: CronJob
   metadata:
     name: broken-link
@@ -71,5 +71,5 @@ objects:
           spec:
             containers:
               - name: broken-link
-                image: image-registry.apps.2.rahti.csc.fi/${NAMESPACE}/broken-link:latest
+                image: docker-registry.rahti.csc.fi/${NAMESPACE}/broken-link:latest
             restartPolicy: OnFailure

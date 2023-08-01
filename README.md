@@ -18,7 +18,7 @@ You can modify the schedule of the cronjob by modifying the line `schedule`:
 ```yaml
 ...
 spec:
-    schedule: '*/10 * * * *'
+    schedule: '0 3 2 * *'
     jobTemplate:
 ...
 ```
