@@ -20,7 +20,7 @@ parameters:
 - name: GITHUB_BRANCH
   description: Branch used in the GitHub repo
   required: true
-  value: s2i
+  value: rahti4
 
 objects:
 - apiVersion: build.openshift.io/v1
