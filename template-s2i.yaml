@@ -22,13 +22,17 @@ parameters:
   required: true
   value: rahti3
 
+- name: EMAIL_RECIPIENT
+  description: Email address of the recipient(s)
+  required: true
+
 objects:
 - apiVersion: build.openshift.io/v1
   kind: BuildConfig
   metadata:
     labels:
       app: broken-link
-    name: broken-link
+    name: broken-link-bc
   spec:
     output:
       to:
@@ -41,6 +45,9 @@ objects:
       type: Git
     strategy:
       sourceStrategy:
+        env:
+        - name: EMAIL_RECIPIENT
+          value: ${EMAIL_RECIPIENT}
         from:
           kind: ImageStreamTag
           name: python:3.9
@@ -62,7 +69,7 @@ objects:
 - apiVersion: batch/v1beta1
   kind: CronJob
   metadata:
-    name: broken-link
+    name: broken-link-cj
   spec:
     schedule: '0 3 2 * *'
     jobTemplate:
