@@ -29,7 +29,7 @@ msg = EmailMessage()
 msg["From"] = "noreply@csc.fi"
 msg["Subject"] = "Broken links report"
 msg["To"] = "tristan.perard@csc.fi"
-msg.set_content("You will find the report of broken links of docs.csc.fi")
+msg.set_content("You will find attached the broken links report of docs.csc.fi")
 msg.add_attachment(open(OUTPUTFILE, "r", encoding="utf-8").read())
 
 s = smtplib.SMTP('smtp.pouta.csc.fi')
