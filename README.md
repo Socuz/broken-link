@@ -5,8 +5,7 @@ Simply process the file `template-s2i.yaml` to create:
 - Image Stream
 - Cronjob
 
-You will need four parameters:
-- NAMESPACE: Name of your Rahti project/namespace
+You will need three parameters:
 - GITHUB_URL: URL of the GitHub repo where to source for building the image
 - GITHUB_BRANCH: Name of the GitHub branch. By default "main"
 - EMAIL_RECIPIENT: Email address of the recipient(s)
